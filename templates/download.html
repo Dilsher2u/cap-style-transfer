@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+    <title>Download File</title>
+<style>
+body{
+	background-color:#fddede;
+	margin:auto;
+	text-align: center;
+	}
+#box{
+	
+	justify-content: center;
+}
+a{
+	color:#fff;
+	text-decoration: none;
+}
+button{
+	background-color: brown;
+	color: #fff;
+	padding: 15px 25px;
+	margin-top: 50px;
+	border-radius: 10px;
+	font-size: 18px;
+	}
+
+</style>
+ <script type="text/javascript" src="/static/js/jquery-3.4.1.min.js"></script>
+ <script type="text/javascript">
+
+        document.onclick = function (e) {
+            e = e || window.event;
+            var element = e.target || e.srcElement;
+            if (element.innerHTML == "Download") {
+                //someFunction(element.href);
+                var name = element.nameProp;
+                var address = element.href;
+		//download(element.href);
+                forceDownload( element.href, element.nameProp);
+                return false; // Prevent default action and stop event propagation
+            }
+            else
+                return true;
+        };
+
+        function saveImageAs1(name, adress) {
+            if (confirm('you wanna save this image?')) {
+                window.win = open(adress);
+                //response.redirect("~/testpage.html");
+                setTimeout('win.document.execCommand("SaveAs")', 100);
+                setTimeout('win.close()', 500);
+            }
+        }
+	function forceDownload(url, fileName){
+	    var xhr = new XMLHttpRequest();
+	    xhr.open("GET", url, true);
+	    xhr.responseType = "blob";
+	    xhr.onload = function(){
+		var urlCreator = window.URL || window.webkitURL;
+		var imageUrl = urlCreator.createObjectURL(this.response);
+		var tag = document.createElement('a');
+		tag.href = imageUrl;
+		tag.download = $('#dfile').val();
+		document.body.appendChild(tag);
+		tag.click();
+		document.body.removeChild(tag);
+	    }
+	    xhr.send();
+	}
+	function download(href){
+		var pom = document.createElement('a');
+pom.setAttribute('href', 'data:application/octet-stream,' + encodeURIComponent(text));
+pom.setAttribute('download', filename);
+pom.style.display = 'none';
+document.body.appendChild(pom);
+pom.click();
+document.body.removeChild(pom);
+	}
+    </script>
+	<body>
+	<h1>Result of created art is here</h1>
+	    <form  method=post>
+		<div id="box">
+		<input type="hidden" value={{dfile}} id="dfile">
+		     <img src=/static/output_images/{{dfile}}  width='300' height='300'>
+			<br>
+		      <button type="button" name="button" value="Download"><a href=/static/output_images/{{dfile}}>Download</a></button>
+			<a href=/upload ><button type="button">Create New</button></a>
+		</div>
+	    </form>
+	</body>
+</html>
+	

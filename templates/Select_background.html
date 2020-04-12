@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+    <html>
+	<title>Select background File</title>
+	<style>
+	body{
+	background-color:#fddede;
+	margin:auto;
+	text-align: center;
+	}
+form{
+	display: flex;
+	flex-direction: column;
+}
+#box{
+	display: flex;
+	justify-content: center;
+}
+		section{
+			padding: 20px;
+
+		}
+		input[type='radio']{
+			top: -180px;
+			position: relative;
+			left: -10px;
+			}
+	input[type='submit']{
+	background-color: brown;
+	color: #fff;
+	padding: 15px 25px;
+	margin-top: 50px;
+	border-radius: 10px;
+	font-size: 18px;
+	}
+	</style>
+    <body>
+
+    <h1>Choose Backgroung Image</h1>
+    <p>Please select the background image:</p>
+    <form method=post enctype=multipart/form-data>
+      <div id="box">
+     <section>
+	<label>
+      <input type="radio" name="bgfile" value="bg1.jpg" checked>
+      <img src="/static/bg-images/bg1.jpg" width='200' height='200'></label>
+    </section>
+    
+    <section>
+	<label>
+      <input type="radio" name="bgfile" value="bg2.jpg">
+      <img src="/static/bg-images/bg2.jpg" width='200' height='200'> </label>
+    </section>
+    <section>
+	<label>
+      <input type="radio" name="bgfile" value="bg3.jpg">
+      <img src="/static/bg-images/bg3.jpg" width='200' height='200'> </label>
+    </section>
+</div>
+	<p >
+      <input type="submit" value="Submit">
+</p>
+    </form>
+    
+    </body>
+    </html>
+
+

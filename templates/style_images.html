@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+    <html>
+	<title>Select Style File</title>
+	<style>
+	body{
+	background-color:#fddede;
+	margin:auto;
+	text-align: center;
+	}
+form{
+	display: flex;
+	flex-direction: column;
+}
+#box{
+	display: flex;
+	justify-content: center;
+}
+		section{
+			padding: 20px;
+
+		}
+		input[type='radio']{
+			top: -180px;
+			position: relative;
+			left: -10px;
+			}
+	input[type='submit']{
+	background-color: brown;
+	color: #fff;
+	padding: 15px 25px;
+	margin-top: 50px;
+	border-radius: 10px;
+	font-size: 18px;
+	}
+	</style>
+    <body>
+
+    <h1>Choose Style Image</h1>
+    <p>Please select the style image:</p>
+    <form method=post enctype=multipart/form-data>
+      <div id="box">
+     <section> <label>
+      <input type="radio" name="stylefile" value="style1.jpg" checked>
+      <img src="/static/style-images/style1.jpg" width='200' height='200'> </label>
+    </section>
+    <section>
+	<label>
+      <input type="radio" name="stylefile" value="style2.jpg">
+      <img src="/static/style-images/style2.jpg" width='200' height='200'> </label>
+    </section>
+    <section>
+	<label>
+      <input type="radio" name="stylefile" value="style3.jpg">
+      <img src="/static/style-images/style3.jpg" width='200' height='200'> </label>
+    </section>
+     <section>
+	<label>
+      <input type="radio" name="stylefile" value="style4.jpg">
+      <img src="/static/style-images/style4.jpg" width='200' height='200'> </label>
+    </section>
+     <section>
+	<label>
+      <input type="radio" name="stylefile" value="style5.jpg">
+      <img src="/static/style-images/style5.jpg" width='200' height='200'> </label>
+    </section>
+	</div>
+	<p>
+      <input type="submit" value="Submit">
+	</p>
+	
+    </form>
+	
+    </body>
+    </html>
