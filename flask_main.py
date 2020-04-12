@@ -46,6 +46,7 @@ def choose_StyleImage():
     global messages
     global dfile
     if request.method == 'POST':
+        print(UPLOAD_FOLDER)
         print('in style- - '+filename)
         print('in style - '+bgfile)
         stylefile = request.form['stylefile']
