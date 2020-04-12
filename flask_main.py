@@ -12,6 +12,7 @@ from main import style_image
 
 
 UPLOAD_FOLDER = os.getcwd()+'/raw'
+print(UPLOAD_FOLDER)
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
@@ -21,7 +22,7 @@ filename= ''
 bgfile = ''
 stylefile = ''
 #messages = False
-#dfile = ''
+dfile = ''
 #dfile = os.path.join(app.config['UPLOAD_FOLDER'], dfile)
 
 def allowed_file(filename):
@@ -41,9 +42,6 @@ def download_Image():
 @app.route('/style', methods=['GET', 'POST'])
 def choose_StyleImage():
     global stylefile
-    global filename
-    global bgfile
-    global messages
     global dfile
     if request.method == 'POST':
         print(UPLOAD_FOLDER)
@@ -67,7 +65,6 @@ def choose_StyleImage():
 @app.route('/choose', methods=['GET', 'POST'])
 def choose_bgImage():
     global bgfile
-    global filename
     if request.method == 'POST':
         print('in choose - '+filename)
         bgfile = request.form['bgfile']
@@ -92,6 +89,7 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+            print("in upload", filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             print(filename)
             #choose_bgImage(filename)
