@@ -23,7 +23,7 @@ import PIL.Image
 from PIL import Image
 import numpy as np
 import PIL.Image
-
+import os
 
 class StyleContentModel(tf.keras.models.Model):
   def __init__(self, style_layers, content_layers):
@@ -132,7 +132,7 @@ def train_step(image, extractor, style_targets, style_weight, num_style_layers, 
 
 
 def style_image(upload_foder, file_name, bgImage, stylefile):
-    UPLOAD_FOLDER = '/home/dilsher/Downloads/style-transfer (1)/style-transfer/static'
+    UPLOAD_FOLDER = os.getcwd()+'/static'
     print(file_name)
     print('in main -'+bgImage)
     bg_image_pw = UPLOAD_FOLDER+"/bg-images/"+bgImage

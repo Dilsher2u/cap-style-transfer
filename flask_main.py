@@ -11,7 +11,7 @@ from werkzeug.utils import secure_filename
 from main import style_image
 
 
-UPLOAD_FOLDER = '/home/dilsher/Downloads/style-transfer'
+UPLOAD_FOLDER = os.getcwd()+'/raw'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
