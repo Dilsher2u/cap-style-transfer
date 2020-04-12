@@ -1,0 +1,7 @@
+Flask==1.1.1
+numpy==1.17.4
+PIL==6.1.0
+matplotlib==3.1.0
+tensorflow_hub==0.7.0
+tensorflow==2.0.0
+werkzeug==0.16.0
