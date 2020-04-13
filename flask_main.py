@@ -55,7 +55,7 @@ class Files():
     def set_dfile(self, dfile):
         self.dfile = dfile
 
-files = Files()
+files_upload = Files()
         
         
 def allowed_file(filename):
@@ -66,26 +66,27 @@ def allowed_file(filename):
 
 @app.route('/download', methods=['GET', 'POST'])
 def download_Image(): 
-    print('in download - '+dfile)
+    global files_upload
+    print('in download - '+files_upload.dfile)
             
-    return render_template('download.html', dfile=files.get_dfile())
+    return render_template('download.html', dfile=files_upload.get_dfile())
 
 
 
 @app.route('/style', methods=['GET', 'POST'])
 def choose_StyleImage():
     
-    
+    global files_upload
     if request.method == 'POST':
         print(UPLOAD_FOLDER)
-        print('in style- - '+files.get_filename())
-        print('in style - '+files.get_bgfile())
-        files.set_stylefile(request.form['stylefile'])
-        print('in style - '+files.get_stylefile())
-        img = style_image(UPLOAD_FOLDER,files.get_filename(), files.get_bgfile(), files.get_stylefile())
+        print('in style- - '+files_upload.get_filename())
+        print('in style - '+files_upload.get_bgfile())
+        files_upload.set_stylefile(request.form['stylefile'])
+        print('in style - '+files_upload.get_stylefile())
+        img = style_image(UPLOAD_FOLDER,files_upload.get_filename(), files_upload.get_bgfile(), files_upload.get_stylefile())
         print(img)
         #messages = True
-        files.set_dfile(img)
+        files_upload.set_dfile(img)
      #   print('image type',+type(dfile))
         #img.show()
         
@@ -97,18 +98,18 @@ def choose_StyleImage():
         
 @app.route('/choose', methods=['GET', 'POST'])
 def choose_bgImage():
-    
+    global files_upload
     if request.method == 'POST':
-        print('in choose - '+files.get_filename())
-        files.set_bgfile(request.form['bgfile'])
-        print('in choose - '+files.get_bgfile())
+        print('in choose - '+files_upload.get_filename())
+        files_upload.set_bgfile(request.form['bgfile'])
+        print('in choose - '+files_upload.get_bgfile())
         return redirect(url_for('choose_StyleImage'))
        
     return render_template('Select_background.html')
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
-    
+    global files_upload
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -121,10 +122,10 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            files.set_filename(secure_filename(file.filename))
-            print("in upload", files.get_filename())
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], files.get_filename()))
-            print(files.get_filename())
+            files_upload.set_filename(file.filename)
+            print("in upload", files_upload.get_filename())
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], files_upload.get_filename()))
+            print(files_upload.get_filename())
             #choose_bgImage(filename)
             
             
