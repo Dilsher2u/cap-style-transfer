@@ -24,7 +24,40 @@ stylefile = ''
 #messages = False
 dfile = ''
 #dfile = os.path.join(app.config['UPLOAD_FOLDER'], dfile)
+class Files():
+    def __init__(self):
+        self.filename = None
+        self.bgfile=None
+        self.stylefile=None
+        self.dfile = None
+    
+    def get_filename(self):
+        return self.filename
+    
+    def get_bgfile(self):
+        return self.bgfile
+    
+    def get_stylefile(self):
+        return self.stylefile
+    
+    def get_dfile(self):
+        return self.dfile
+    
+    def set_filename(self, filename):
+        self.filename = filename
+    
+    def set_bgfile(self, bgfile):
+        self.bgfile = bgfile
+    
+    def set_stylefile(self, stylefile):
+        self.stylefile = stylefile
+        
+    def set_dfile(self, dfile):
+        self.dfile = dfile
 
+files = Files()
+        
+        
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -35,24 +68,24 @@ def allowed_file(filename):
 def download_Image(): 
     print('in download - '+dfile)
             
-    return render_template('download.html', dfile=dfile)
+    return render_template('download.html', dfile=files.get_dfile())
 
 
 
 @app.route('/style', methods=['GET', 'POST'])
 def choose_StyleImage():
-    global stylefile
-    global dfile
+    
+    
     if request.method == 'POST':
         print(UPLOAD_FOLDER)
-        print('in style- - '+filename)
-        print('in style - '+bgfile)
-        stylefile = request.form['stylefile']
-        print('in style - '+stylefile)
-        img = style_image(UPLOAD_FOLDER,filename, bgfile, stylefile)
+        print('in style- - '+files.get_filename())
+        print('in style - '+files.get_bgfile())
+        files.set_stylefile(request.form['stylefile'])
+        print('in style - '+files.get_stylefile())
+        img = style_image(UPLOAD_FOLDER,files.get_filename(), files.get_bgfile(), files.get_stylefile())
         print(img)
         #messages = True
-        dfile = img
+        files.set_dfile(img)
      #   print('image type',+type(dfile))
         #img.show()
         
@@ -64,18 +97,18 @@ def choose_StyleImage():
         
 @app.route('/choose', methods=['GET', 'POST'])
 def choose_bgImage():
-    global bgfile
+    
     if request.method == 'POST':
-        print('in choose - '+filename)
-        bgfile = request.form['bgfile']
-        print('in choose - '+bgfile)
+        print('in choose - '+files.get_filename())
+        files.set_bgfile(request.form['bgfile'])
+        print('in choose - '+files.get_bgfile())
         return redirect(url_for('choose_StyleImage'))
        
     return render_template('Select_background.html')
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
-    global filename
+    
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -88,10 +121,10 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            print("in upload", filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            print(filename)
+            files.set_filename(secure_filename(file.filename))
+            print("in upload", files.get_filename())
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], files.get_filename()))
+            print(files.get_filename())
             #choose_bgImage(filename)
             
             
