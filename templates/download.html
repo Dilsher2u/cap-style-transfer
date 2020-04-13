@@ -78,13 +78,13 @@ document.body.removeChild(pom);
 	}
     </script>
 	<body>
-	<h1>Result of created art is here</h1>
+	<h1>Result of created art is here </h1>
 	    <form  method=post>
 		<div id="box">
 		<input type="hidden" value={{dfile}} id="dfile">
-		     <img src=/static/output_images/{{dfile}}  width='300' height='300'>
+		     <img src=static/output_images/{{dfile}} alt="Image cannot be displayed" width="300" height="300">
 			<br>
-		      <button type="button" name="button" value="Download"><a href=/static/output_images/{{dfile}}>Download</a></button>
+		      <button type="button" name="button" value="Download"><a href=static/output_images/{{dfile}}>Download</a></button>
 			<a href=/upload ><button type="button">Create New</button></a>
 		</div>
 	    </form>

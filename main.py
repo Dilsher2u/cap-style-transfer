@@ -131,15 +131,14 @@ def train_step(image, extractor, style_targets, style_weight, num_style_layers, 
 
 
 
-def style_image(upload_foder, file_name, bgImage, stylefile):
+def style_image(stylefile):
     UPLOAD_FOLDER = os.getcwd()+'/static'
-    print(file_name)
-    print('in main -'+bgImage)
-    bg_image_pw = UPLOAD_FOLDER+"/bg-images/"+bgImage
+    
+    bg_image_pw ="temp_bg.jpg"
     
     bg_images = [bg_image_pw]
 
-    fg_image = upload_foder+"/"+file_name
+    fg_image = "temp_content.jpg"
     
     blended_image = blend_image(fg_image, bg_images[0])
 
@@ -155,8 +154,9 @@ def style_image(upload_foder, file_name, bgImage, stylefile):
     stylized_image = hub_module(tf.constant(content_image), tf.constant(style_image))[0]
     img = tensor_to_image(stylized_image)
     
-
-    img.save(UPLOAD_FOLDER+"/output_images/"+file_name[:-4]+"_"+bgImage[:-4]+"_"+stylefile[:-4]+".jpg")
+    random_string = random_generator()
+    img.save(UPLOAD_FOLDER+"/output_images/"+"blended_style"+random_string+".jpg")
+    img.save(UPLOAD_FOLDER+"/blended_styled.jpg")
     
     #return img
     """
@@ -248,7 +248,7 @@ def style_image(upload_foder, file_name, bgImage, stylefile):
     """
     #return img
 
-    return file_name[:-4]+"_"+bgImage[:-4]+"_"+stylefile[:-4]+".jpg"
+    return "blended_style"+random_string+".jpg"
 
 
 

@@ -9,7 +9,8 @@ import os
 from flask import Flask, flash, request, redirect, url_for, render_template, make_response
 from werkzeug.utils import secure_filename
 from main import style_image
-
+from main import load_img
+from PIL import Image
 
 UPLOAD_FOLDER = os.getcwd()+'/raw'
 print(UPLOAD_FOLDER)
@@ -67,26 +68,26 @@ def allowed_file(filename):
 @app.route('/download', methods=['GET', 'POST'])
 def download_Image(): 
     global files_upload
-    print('in download - '+files_upload.dfile)
+    #print('in download - '+files_upload.dfile)
             
-    return render_template('download.html', dfile=files_upload.get_dfile())
+    return render_template('download.html', dfile=dfile)
 
 
 
 @app.route('/style', methods=['GET', 'POST'])
 def choose_StyleImage():
     
-    global files_upload
+    global dfile
     if request.method == 'POST':
-        print(UPLOAD_FOLDER)
-        print('in style- - '+files_upload.get_filename())
-        print('in style - '+files_upload.get_bgfile())
-        files_upload.set_stylefile(request.form['stylefile'])
-        print('in style - '+files_upload.get_stylefile())
-        img = style_image(UPLOAD_FOLDER,files_upload.get_filename(), files_upload.get_bgfile(), files_upload.get_stylefile())
-        print(img)
+        #print(UPLOAD_FOLDER)
+        #print('in style- - '+files_upload.get_filename())
+        #print('in style - '+files_upload.get_bgfile())
+        style_img = request.form['stylefile']
+        #print('in style - '+files_upload.get_stylefile())
+        img = style_image(style_img)
+        dfile = img
         #messages = True
-        files_upload.set_dfile(img)
+        #files_upload.set_dfile(img)
      #   print('image type',+type(dfile))
         #img.show()
         
@@ -100,9 +101,14 @@ def choose_StyleImage():
 def choose_bgImage():
     global files_upload
     if request.method == 'POST':
-        print('in choose - '+files_upload.get_filename())
-        files_upload.set_bgfile(request.form['bgfile'])
-        print('in choose - '+files_upload.get_bgfile())
+        #print('in choose - '+files_upload.get_filename())
+        bg_file = request.form['bgfile']
+        bg_image_pw = os.getcwd()+'/static/bg-images/'+bg_file
+        bg_image = Image.open(bg_image_pw)
+        bg_image.save("temp_bg.jpg")
+        
+        #files_upload.set_bgfile(request.form['bgfile'])
+        #print('in choose - '+files_upload.get_bgfile())
         return redirect(url_for('choose_StyleImage'))
        
     return render_template('Select_background.html')
@@ -123,9 +129,10 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             files_upload.set_filename(file.filename)
-            print("in upload", files_upload.get_filename())
+            print(file.filename)
+            file.save("temp_content.jpg")
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], files_upload.get_filename()))
-            print(files_upload.get_filename())
+            #print(files_upload.get_filename())
             #choose_bgImage(filename)
             
             
