@@ -128,10 +128,18 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            files_upload.set_filename(file.filename)
+            #files_upload.set_filename(file.filename)
             print(file.filename)
-            file.save("temp_content.jpg")
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], files_upload.get_filename()))
+            print(file.filename[-4:])
+            if(file.filename[-4:]==".png"):
+                print("true")
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+                im = Image.open(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+                rgb_im = im.convert('RGB')
+                rgb_im.save("temp_content.jpg")
+            else:
+                file.save("temp_content.jpg") 
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
             #print(files_upload.get_filename())
             #choose_bgImage(filename)
             

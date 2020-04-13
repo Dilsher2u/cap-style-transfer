@@ -14,7 +14,7 @@ def blend_image(img1, img2):
     
     Im2 = Im2.resize(Im.size)
     
-    img = Image.blend(Im,Im2,0.25)
+    img = Image.blend(Im,Im2,0.175)
     img.save("Blended_image.jpg")
     return img
 
